@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+# Ignore everything
+*
+
+# Include specific files
+!.ansible-lint
+!.editorconfig
+!.gitignore
+!.yamllint
+!ansible.cfg
+!LICENSE.md
+!README.md
+!requirements.txt
+!requirements.yaml
+!site.yaml
+!tox.ini
+
+# Include files from specific dirs
+!.github/
+!.github/**/
+!.github/**/*.yaml
+
+!.vscode/
+!.vscode/*.json
+
+!group_vars/
+!group_vars/*.yaml
+
+!inventory/
+!inventory/*.yaml
+
+!library/
+!library/*.md
+!library/*.py
+
+!requirements/
+!requirements/*.txt
+
+!roles/
+!roles/**/
+!roles/**/*.j2
+!roles/**/*.md
+!roles/**/*.yaml

@@ -1,0 +1,11 @@
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+FROM {{ openstack_container_image }} AS core
+RUN apk --no-cache add postgresql14 tini tzdata
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+ENTRYPOINT ["/sbin/tini", "--"]
+
+FROM core AS release
+USER postgres
+CMD ["/usr/bin/postgres", "--config-file", ""]

@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Create dir(s)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: john
+    group: wheel
+    mode: 0750
+  loop:
+    - /etc/capstone/keystone/credential-keys
+    - /etc/capstone/keystone/domains
+    - /etc/capstone/keystone/fernet-keys
+    - /etc/capstone/keystone/jws-keys/private
+    - /etc/capstone/keystone/jws-keys/public
+    - /var/log/capstone/keystone
+
+- name: Write template(s)
+  ansible.builtin.template:
+    src: "{{ item | basename }}.j2"
+    dest: "{{ item }}"
+    owner: john
+    group: wheel
+    mode: 0640
+  loop:
+    - /etc/capstone/keystone/Containerfile
+    - /etc/capstone/keystone/entrypoint.sh
+    - /etc/capstone/keystone/keystone.conf
+  register: keystone_config

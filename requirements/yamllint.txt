@@ -1,0 +1,3 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+yamllint==1.26.3

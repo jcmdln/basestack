@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Build container image
+  containers.podman.podman_image:
+    name: capstone/rabbitmq
+    path: /etc/capstone/rabbitmq
+    state: present
+    tag: "{{ openstack_release | lower }}"
+    build:
+      annotation:
+        app: rabbitmq
+        info: OpenStack rabbitmq
+      force_rm: true
+    force: >-
+      {{ true if rabbitmq_config is defined and rabbitmq_config.changed|bool
+      else false }}

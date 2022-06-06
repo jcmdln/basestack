@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+set -eux -o pipefail
+
+if [ ! -e /var/log/keystone ]; then
+    mkdir -p /var/log/keystone
+fi
+
+if [ ! -e /var/log/keystone/keystone.log ]; then
+    touch /var/log/keystone/keystone.log
+fi
+
+if [ ! -e /etc/keystone/fernet-keys ]; then
+    mkdir -p /etc/keystone/fernet-keys
+fi
+
+keystone-manage db_sync
+
+keystone-manage fernet_setup \
+    --keystone-user keystone \
+    --keystone-group keystone
+
+keystone-manage credential_setup \
+    --keystone-user keystone \
+    --keystone-group keystone
+
+keystone-manage bootstrap \
+    --bootstrap-password admin \
+    --bootstrap-admin-url {{ keystone_admin_url }} \
+    --bootstrap-internal-url {{ keystone_internal_url }} \
+    --bootstrap-public-url {{ keystone_public_url }}
+
+export OS_AUTH_URL="{{ keystone_public_url }}"
+export OS_IDENTITY_API_VERSION="3"
+export OS_PASSWORD="admin"
+export OS_PROJECT_DOMAIN_NAME="Default"
+export OS_PROJECT_NAME="admin"
+export OS_USER_DOMAIN_NAME="Default"
+export OS_USERNAME="admin"

@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+collections:
+  - name: ansible.posix
+  - name: ansible.utils
+  - name: community.crypto
+  - name: community.general
+  - name: containers.podman
+  - name: openstack.cloud
+roles: []

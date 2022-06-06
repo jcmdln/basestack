@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+max_line_length = 100
+tab_width = 4
+trim_trailing_whitespace = true
+
+[*.hcl{,.j2}]
+indent_size = 2
+tab_width = 2
+
+[*.json{,c}{,.j2}]
+indent_size = 2
+tab_width = 2
+
+[*.y{,a}ml{,.j2}]
+indent_size = 2
+tab_width = 2
+
+[*.{yaml,ansible-}lint]
+indent_size = 2
+tab_width = 2

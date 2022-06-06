@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+-r ./ansible-lint.txt
+-r ./ansible.txt
+-r ./molecule.txt
+-r ./tox.txt
+-r ./yamllint.txt

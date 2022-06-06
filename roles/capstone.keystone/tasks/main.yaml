@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- ansible.builtin.include_tasks:
+    file: config.yaml
+    apply:
+      tags: [config, keystone-config]
+  tags: [config, keystone-config]
+
+- ansible.builtin.include_tasks:
+    file: build.yaml
+    apply:
+      tags: [build, keystone-build]
+  tags: [build, keystone-build]

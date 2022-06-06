@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Build container image
+  containers.podman.podman_image:
+    name: capstone/cinder
+    path: /etc/capstone/cinder
+    state: present
+    tag: "{{ openstack_release | lower }}"
+    build:
+      annotation:
+        app: cinder
+        info: OpenStack Cinder
+    force: true

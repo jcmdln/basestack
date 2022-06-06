@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+# - ansible.builtin.include_tasks:
+#     file: config.yaml
+#     apply:
+#       tags: [config, horizon-config]
+#   tags: [config, horizon-config]
+
+# - ansible.builtin.include_tasks:
+#     file: build.yaml
+#     apply:
+#       tags: [build, horizon-build]
+#   tags: [build, horizon-build]

@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Build container image
+  containers.podman.podman_image:
+    name: capstone/postgres
+    path: /etc/capstone/postgres
+    state: present
+    tag: "{{ openstack_release | lower }}"
+    build:
+      annotation:
+        app: postgres
+        info: Postgres
+    force: true

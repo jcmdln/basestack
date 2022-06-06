@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Create dir(s)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: john
+    group: wheel
+    mode: 0750
+  loop:
+    - /etc/capstone/redis
+    - /var/log/capstone/redis
+
+- name: Write template(s)
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/etc/capstone/redis/{{ item }}"
+    owner: john
+    group: wheel
+    mode: 0640
+  loop:
+    - Containerfile
+  register: redis_config

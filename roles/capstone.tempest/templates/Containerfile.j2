@@ -1,0 +1,21 @@
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+FROM {{ openstack_container_image }} AS core
+RUN apk --no-cache add openssl py3-psycopg2 python3 tzdata
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+
+FROM core AS build
+RUN apk --no-cache add build-base git libffi-dev libpq-dev python3-dev py3-wheel
+RUN python3 -m venv /opt/.venv
+ENV PATH="/opt/.venv/bin:$PATH"
+RUN pip --disable-pip-version-check --no-cache-dir install \
+    git+{{ openstack_mirror }}/tempest@30.1.0
+
+FROM core AS release
+RUN mkdir -p /etc/tempest /var/log/tempest
+RUN addgroup tempest
+RUN adduser -DHS -G tempest tempest
+COPY --chown=tempest:tempest --from=build /opt/.venv /opt/.venv
+ENV PATH="/opt/.venv/bin:$PATH"
+USER tempest
