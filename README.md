@@ -30,10 +30,10 @@ playbook: site.yaml
       TASK TAGS: [always]
 
   play #2 (all): Depends        TAGS: [depends]
-      TASK TAGS: [build, ceph, ceph-build, ceph-config, ceph-deploy, config,
-      depends, depends-build, depends-config, depends-deploy, deploy, postgres,
-      postgres-build, postgres-config, postgres-deploy, rabbitmq,
-      rabbitmq-build, rabbitmq-config, redis, redis-build, redis-config]
+      TASK TAGS: [build, config, depends, depends-build, depends-config,
+      depends-deploy, deploy, postgres, postgres-build, postgres-config,
+      postgres-deploy, rabbitmq, rabbitmq-build, rabbitmq-config, redis,
+      redis-build, redis-config]
 
   play #3 (all): OS Core        TAGS: [os-core]
       TASK TAGS: [build, config, keystone, keystone-build, keystone-config,

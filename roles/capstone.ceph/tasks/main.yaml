@@ -1,25 +1,25 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
-- ansible.builtin.include_tasks:
-    file: config.yaml
-    apply:
-      tags: [config, depends-config, ceph-config]
-  tags: [config, depends-config, ceph-config]
+# - ansible.builtin.include_tasks:
+#     file: config.yaml
+#     apply:
+#       tags: [config, depends-config, ceph-config]
+#   tags: [config, depends-config, ceph-config]
 
-- ansible.builtin.include_tasks:
-    file: build.yaml
-    apply:
-      tags: [build, depends-build, ceph-build]
-  tags: [build, depends-build, ceph-build]
+# - ansible.builtin.include_tasks:
+#     file: build.yaml
+#     apply:
+#       tags: [build, depends-build, ceph-build]
+#   tags: [build, depends-build, ceph-build]
 
-- ansible.builtin.include_tasks:
-    file: build.yaml
-    apply:
-      tags: [build, depends-build, ceph-build]
-  tags: [build, depends-build, ceph-build]
+# - ansible.builtin.include_tasks:
+#     file: build.yaml
+#     apply:
+#       tags: [build, depends-build, ceph-build]
+#   tags: [build, depends-build, ceph-build]
 
-- ansible.builtin.include_tasks:
-    file: deploy.yaml
-    apply:
-      tags: [deploy, depends-deploy, ceph-deploy]
-  tags: [deploy, depends-deploy, ceph-deploy]
+# - ansible.builtin.include_tasks:
+#     file: deploy.yaml
+#     apply:
+#       tags: [deploy, depends-deploy, ceph-deploy]
+#   tags: [deploy, depends-deploy, ceph-deploy]
