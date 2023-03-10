@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+{% include "Containerfile.core.j2" %}
+
+FROM base_image AS release
+RUN apk add --no-cache --upgrade redis
+USER redis

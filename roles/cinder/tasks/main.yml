@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Include config tasks
+  ansible.builtin.include_tasks:
+    file: config.yml
+    apply:
+      tags: [config, cinder-config]
+  tags: [config, cinder-config]
+
+- name: Include build tasks
+  ansible.builtin.include_tasks:
+    file: build.yml
+    apply:
+      tags: [build, cinder-build]
+  tags: [build, cinder-build]

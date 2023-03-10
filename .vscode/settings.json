@@ -1,38 +1,58 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 {
-  "ansible.ansibleLint.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.wordWrap": "on",
+  "evenBetterToml.formatter.reorderKeys": true,
   "files.associations": {
-    "**/.ansible-lint": "yaml",
-    "**/*.pkr.hcl": "packer",
-    "**/Containerfile.j2": "jinja-dockerfile",
+    ".ansible-lint": "yaml",
+    "*.conf.j2": "jinja-properties",
+    "**/handlers/**/*.yml": "ansible",
+    "**/inventory/**/*.yml": "ansible",
+    "**/roles/**/defaults/**/*.yml": "ansible",
+    "**/roles/**/tasks/**/*.yml": "ansible",
+    "**/roles/**/vars/**/*.yml": "ansible",
+    "site-*.yml": "ansible",
+    "tox.ini": "properties"
   },
   "files.exclude": {
-    ".cache": true
+    "**/__pycache__/**": true,
+    "**/.cache/**": true,
+    "**/.mypy_cache/**": true,
+    "**/.pytest_cache/**": true,
+    "**/.tox/**": true,
+    "**/.venv/**": true,
+    "**/*.egg-info/**": true
   },
-  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.defaultInterpreterPath": ".venv/bin/python",
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.banditEnabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["--config=${workspaceFolder}/.flake8"],
+  "python.linting.mypyEnabled": true,
+  "python.linting.pycodestyleEnabled": false,
+  "python.linting.pydocstyleEnabled": false,
   "yaml.schemas": {
-    "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json": [
-      "roles/*/tasks/*.yaml",
-      "site*.yaml"
+    "https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json": [
+      "handlers/*.yml",
+      "roles/*/tasks/*.yml",
+      "roles/*/handlers/*.yml",
+      "site-*.yaml"
+    ],
+    "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-galaxy.json": [
+      "galaxy.yml"
     ],
     "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-vars.json": [
-      "roles/*/defaults/*.yaml",
-      "roles/*/vars/*.yaml"
+      "roles/*/defaults/*.yml",
+      "roles/*/vars/*.yml"
     ],
-    "https://json.schemastore.org/github-workflow.json": ".github/workflows"
+    "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
   },
-  "[ansible]": {
-    "editor.defaultFormatter": "redhat.ansible"
-  },
-  "[markdown]": {
+  "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml.j2]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
   }
 }

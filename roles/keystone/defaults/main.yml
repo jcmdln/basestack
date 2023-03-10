@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+# https://docs.openstack.org/keystone/yoga/configuration/
+
+keystone_admin_url: http://localhost:5000
+keystone_internal_url: http://localhost:5000
+keystone_public_url: http://localhost:5000
+
+keystone_default_debug: false
+keystone_default_insecure_debug: false
+keystone_default_transport_url: redis://localhost:6379/
+keystone_cache_backend: dogpile.cache.redis
+keystone_cache_backend_arguments:
+  - redis_expiration_time:3600
+  - url:redis://localhost:6379
+keystone_database_connection: postgresql+psycopg2://openstack:openstack@localhost:5432/keystone
+keystone_federation_enabled: true
+keystone_federation_trusted_dashboards: []

@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+FROM quay.io/fedora/fedora:36 AS devel
+RUN dnf install -y gcc git libpq-devel python3-devel python3-wheel
+RUN git clone --branch {{ capstone_release_branch | lower }} --depth 1 {{ capstone_source_mirror }}/glance
+RUN python3 -m venv /opt/glance
+ENV PATH="/opt/glance/bin:$PATH"
+RUN pip --disable-pip-version-check --no-cache-dir install ./glance
+
+FROM quay.io/fedora/fedora:36 AS release
+RUN dnf install -y libpq tini && \
+    dnf autoremove -y && dnf clean all
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+ENTRYPOINT ["/tini"]
+RUN useradd --system glance
+RUN mkdir -p /etc/glance /var/log/glance
+COPY --chown=glance:glance --from=devel /opt/glance /opt/glance
+ENV PATH="/opt/glance/bin:$PATH"
+USER glance

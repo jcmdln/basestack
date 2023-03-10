@@ -1,4 +1,0 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
-
-ansible-core==2.12.5
-netaddr==0.8.0

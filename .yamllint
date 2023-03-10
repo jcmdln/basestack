@@ -1,11 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
-yaml-files:
-  - "*.yaml"
-  - "*.yaml"
-  - ".ansible-lint"
-  - ".yamllint"
-
 ignore: |
   .mypy_cache/
   .tox/
@@ -14,7 +8,8 @@ ignore: |
   .vscode/
 
 rules:
-  braces: enable
+  braces:
+    max-spaces-inside: 1
   brackets: enable
   colons: enable
   commas: enable
@@ -32,9 +27,9 @@ rules:
   key-duplicates: enable
   key-ordering: disable
   line-length:
-    max: 99
     allow-non-breakable-inline-mappings: true
     allow-non-breakable-words: true
+    max: 120
   new-line-at-end-of-file: enable
   new-lines: enable
   octal-values: disable
@@ -43,3 +38,8 @@ rules:
   truthy:
     allowed-values: ["true", "false"]
     check-keys: false
+
+yaml-files:
+  - "*.yml"
+  - ".ansible-lint"
+  - ".yamllint"

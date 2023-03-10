@@ -1,0 +1,96 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+cephadm_release: quincy
+cephadm_source: "https://raw.githubusercontent.com/ceph/ceph/{{ cephadm_release }}-release/src/cephadm/cephadm"
+
+#
+# Dashboard
+#
+
+cephadm_dashboard_enabled: false
+cephadm_dashboard_password: admin
+cephadm_dashboard_username: admin
+
+cephadm_dashboard_server_addr: >-
+  {{ hostvars[inventory_hostname].ansible_facts[cephadm_network_interface_public][cephadm_network_ip_version] }}
+cephadm_dashboard_server_port: 8080
+cephadm_dashboard_server_port_ssl: 8443
+
+cephadm_dashboard_ssl_crt: ""
+cephadm_dashboard_ssl_key: ""
+
+#
+# Monitoring
+#
+
+cephadm_monitoring_stack_enabled: false
+
+#
+# Network
+#
+
+cephadm_network_ip_version: ipv4
+
+cephadm_network_interface_cluster: "{{ ansible_default_ipv4.interface }}"
+cephadm_network_interface_public: "{{ ansible_default_ipv4.interface }}"
+
+cephadm_network_interface_mgrs: "{{ cephadm_network_interface_cluster }}"
+cephadm_network_interface_mons: "{{ cephadm_network_interface_public }}"
+cephadm_network_interface_osds: "{{ cephadm_network_interface_cluster }}"
+cephadm_network_interface_rgws: "{{ cephadm_network_interface_public }}"
+
+#
+# Pools
+#
+
+cephadm_osd_pools:
+  - { name: backups, application: rbd, size: 2, type: replicated }
+  - { name: images, application: rbd, size: 2, type: replicated }
+  - { name: manilla_data, application: cephfs, size: 2, type: replicated }
+  - { name: manilla_metadata, application: cephfs, size: 2, type: replicated }
+  - { name: metrics, application: rbd, size: 2, type: replicated }
+  - { name: vms, application: rbd, size: 2, type: replicated }
+  - { name: volumes, application: rbd, size: 2, type: replicated }
+
+#
+# Openstack
+#
+
+cephadm_openstack_enabled: false
+
+cephadm_openstack_keys:
+  - name: client.cinder
+    caps:
+      mon: { profile: "rbd" }
+      osd: { profile: "rbd", pools: ["vms", "volumes"] }
+      mode: "0600"
+  - name: client.cinder-backup
+    caps:
+      mon: { profile: "rbd" }
+      osd: { profile: "rbd", pools: ["backups"] }
+      mode: "0600"
+  - name: client.glance
+    caps:
+      mon: { profile: "rbd" }
+      osd: { profile: "rbd", pools: ["images", "volumes"] }
+      mode: "0600"
+  - name: client.gnocchi
+    caps:
+      mon: { profile: "rbd" }
+      osd: { profile: "rbd", pools: ["metrics"] }
+      mode: "0600"
+  - name: client.openstack
+    caps:
+      mon: { profile: "rbd" }
+      osd: { profile: "rbd", pools: ["backups", "images", "vms", "volumes"] }
+      mode: "0600"
+
+#
+# RGW
+#
+
+cephadm_rgw_enabled: true
+
+cephadm_rgw_realm: default
+cephadm_rgw_zone: default
+cephadm_rgw_zonegroup: default

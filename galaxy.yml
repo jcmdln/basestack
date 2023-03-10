@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+namespace: jcmdln
+name: capstone
+repository: https://github.com/jcmdln/capstone
+version: 0.0.0
+
+authors:
+  - "Johnathan C Maudlin <jcmdln@gmail.com>"
+description: ""
+dependencies:
+  ansible.posix: "*"
+  ansible.utils: "*"
+  community.crypto: "*"
+  community.general: "*"
+  containers.podman: "*"
+  openstack.cloud: "*"
+license_file: LICENSE.md
+readme: README.md

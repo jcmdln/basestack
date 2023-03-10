@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Include config tasks
+  ansible.builtin.include_tasks:
+    file: config.yml
+    apply:
+      tags: [config, openstackclient-config]
+  tags: [config, openstackclient-config]
+
+- name: Include build tasks
+  ansible.builtin.include_tasks:
+    file: build.yml
+    apply:
+      tags: [build, openstackclient-build]
+  tags: [build, openstackclient-build]

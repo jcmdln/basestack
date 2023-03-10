@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Build container(s)
+  containers.podman.podman_image:
+    name: capstone/keystone
+    path: /etc/capstone/keystone
+    state: present
+    tag: "{{ capstone_release | lower }}"
+    build:
+      annotation:
+        app: keystone
+        info: OpenStack Keystone
+    force: true
+  loop:
+    - name: capstone/keystone
+      path: /etc/capstone/keystone

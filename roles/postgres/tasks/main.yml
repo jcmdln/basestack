@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Include config tasks
+  ansible.builtin.include_tasks:
+    file: config.yml
+    apply:
+      tags: [config, depends-config, postgres-config]
+  tags: [config, depends-config, postgres-config]
+
+- name: Include build tasks
+  ansible.builtin.include_tasks:
+    file: build.yml
+    apply:
+      tags: [build, depends-build, postgres-build]
+  tags: [build, depends-build, postgres-build]
+#
+# - ansible.builtin.include_tasks:
+#     file: deploy.yml
+#     apply:
+#       tags: [deploy, depends-deploy, postgres-deploy]
+#   tags: [deploy, depends-deploy, postgres-deploy]

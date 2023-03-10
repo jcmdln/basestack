@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Build container image
+  containers.podman.podman_image:
+    name: capstone/horizon
+    path: /etc/capstone/horizon
+    state: present
+    tag: "{{ capstone_release | lower }}"
+    build:
+      annotation:
+        app: horizon
+        info: OpenStack Horizon
+    force: true

@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Create dir(s)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: wheel
+    mode: 0750
+  loop:
+    - /etc/capstone/placement
+    - /var/log/capstone/placement
+
+- name: Write template(s)
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/etc/capstone/placement/{{ item }}"
+    owner: "{{ ansible_user_id }}"
+    group: wheel
+    mode: 0640
+  loop:
+    - Containerfile
+  register: placement_config

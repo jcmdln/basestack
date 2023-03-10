@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Run container
+  containers.podman.podman_container:
+    name: capstone-postgres
+    image: "capstone/postgres:{{ capstone_release | lower }}"
+    state: started
+    detach: true
+    network: host
+    ports:
+      - 5432:5432
+    volume:
+      - /etc/capstone/postgres/data:/var/lib/postgresql/data/:rw
+      - /var/log/capstone/postgres:/var/log/postgres:rw

@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+{% include "Containerfile.core.j2" %}
+
+FROM base_image AS build
+RUN apk add --no-cache --upgrade build-base git libffi-dev libpq-dev python3-dev py3-wheel
+RUN python3 -m venv /opt/.venv
+ENV PATH="/opt/.venv/bin:$PATH"
+RUN pip --disable-pip-version-check --no-cache-dir install \
+    git+{{ capstone_source_mirror }}/horizon@stable/{{ capstone_release | lower }}
+
+FROM base_image AS release
+RUN apk add --no-cache --upgrade libpq python3
+RUN mkdir -p /etc/horizon /var/log/horizon
+RUN addgroup horizon && adduser -DHS -G horizon horizon
+COPY --chown=horizon:horizon --from=build /opt/.venv /opt/.venv
+ENV PATH="/opt/.venv/bin:$PATH"
+USER horizon

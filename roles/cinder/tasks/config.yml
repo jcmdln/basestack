@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Create dir(s)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: wheel
+    mode: 0750
+  loop:
+    - /etc/capstone/cinder
+    - /var/log/capstone/cinder
+
+- name: Write template(s)
+  ansible.builtin.template:
+    src: "{{ item | basename }}.j2"
+    dest: "{{ item }}"
+    owner: "{{ ansible_user_id }}"
+    group: wheel
+    mode: 0640
+  loop:
+    - /etc/capstone/cinder/Containerfile
+  register: cinder_config

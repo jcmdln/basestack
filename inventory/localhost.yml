@@ -1,0 +1,102 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+capstone:
+  hosts:
+    localhost:
+      ansible_connection: local
+
+#
+# Ceph
+#
+
+mgrs:
+  children:
+    capstone:
+
+mons:
+  children:
+    capstone:
+
+osds:
+  children:
+    capstone:
+
+rgws:
+  children:
+    capstone:
+
+#
+# Monitoring
+#
+
+grafana:
+  children:
+    capstone:
+
+loki:
+  children:
+    capstone:
+
+prometheus:
+  children:
+    capstone:
+
+#
+# OpenStack
+#
+
+cinder:
+  children:
+    capstone:
+
+glance:
+  children:
+    capstone:
+
+heat:
+  children:
+    capstone:
+
+horizon:
+  children:
+    capstone:
+
+keystone:
+  children:
+    capstone:
+
+neutron:
+  children:
+    capstone:
+
+nova:
+  children:
+    capstone:
+
+octavia:
+  children:
+    capstone:
+
+placement:
+  children:
+    capstone:
+
+swift:
+  children:
+    rgws:
+
+#
+# Services
+#
+
+haproxy:
+  children:
+    capstone:
+
+postgres:
+  children:
+    capstone:
+
+redis:
+  children:
+    capstone:

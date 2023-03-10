@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+[DEFAULT]
+debug = {{ keystone_default_debug }}
+insecure_debug = {{ keystone_default_insecure_debug }}
+log_file = /var/log/keystone/keystone.log
+log_rotation_type = size
+max_logfile_count = 5
+max_logfile_size_mb = 200
+strict_password_check = True
+transport_url = {{ keystone_default_transport_url }}
+use_stderr = True
+
+[auth]
+methods = password,token,openid,application_credential
+
+[cache]
+backend = dogpile.cache.redis
+{% for argument in keystone_cache_backend_arguments %}
+backend_argument = {{ argument }}
+{% endfor %}
+memcache_servers =
+
+[database]
+connection = {{ keystone_database_connection }}
+max_retries = -1
+
+{% if keystone_federation_enabled %}
+[federation]
+{% for dashboard in keystone_federation_trusted_dashboards %}
+trusted_dashboard = {{ dashboard }}
+{% endfor %}
+{% endif %}
+
+[identity]
+domain_config_dir = /etc/keystone/domains
+domain_specific_drivers_enabled = True
+
+[oslo_middleware]
+enable_proxy_headers_parsing = True
+
+[token]
+provider = fernet

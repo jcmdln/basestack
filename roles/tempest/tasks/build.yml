@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Build container image
+  containers.podman.podman_image:
+    name: capstone/tempest
+    path: /etc/capstone/tempest
+    state: present
+    tag: "{{ capstone_release | lower }}"
+    build:
+      annotation:
+        app: tempest
+        info: OpenStack Tempest
+    force: true

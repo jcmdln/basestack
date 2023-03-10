@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Create /etc/ceph directory
+  ansible.builtin.file:
+    path: /etc/ceph
+    state: directory
+    owner: root
+    group: wheel
+    mode: 0600
+
+- name: Check if /etc/ceph/ceph.conf exists
+  ansible.builtin.stat:
+    path: /etc/ceph/ceph.conf
+  register: cephadm_ceph_conf
+
+- name: Bootstrap Ceph
+  cephadm_bootstrap:
+    mon_ip: "{{ target.address }}"
+    skip_dashboard: true
+    skip_monitoring_stack: true
+  vars:
+    ipv: "{{ cephadm_network_ip_version }}"
+    interface: "{{ cephadm_network_interface_public }}"
+    target: "{{ ansible_facts[interface][ipv] }}"
+  when: not cephadm_ceph_conf.stat.exists
+
+- name: Add cephadm pubkey to all other hosts
+  ansible.builtin.raw: >-
+    ssh-copy-id -f
+    -i /etc/ceph/ceph.pub
+    -o 'IdentityFile ~/.ssh/cephadm_rsa'
+    {{ item }}
+  changed_when: false
+  when: (cephadm_hosts | length) > 0
+  loop: "{{ cephadm_hosts | difference(inventory_hostname) }}"
+  loop_control:
+    label: "{{ item }}"

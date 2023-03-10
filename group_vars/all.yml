@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+capstone_image_name: fedora
+capstone_image_registry: registry.fedoraproject.org
+capstone_image_version: 37
+capstone_source_mirror: https://github.com/openstack
+capstone_release: zed
+capstone_release_branch: "stable/{{ capstone_release }}"

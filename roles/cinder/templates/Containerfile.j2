@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+FROM quay.io/fedora/fedora:36 AS devel
+RUN dnf install -y gcc git libpq-devel libxslt-devel python3-devel python3-wheel
+RUN git clone --branch {{ capstone_release_branch | lower }} --depth 1 {{ capstone_source_mirror }}/cinder
+RUN python3 -m venv /opt/cinder
+ENV PATH="/opt/cinder/bin:$PATH"
+RUN pip --disable-pip-version-check --no-cache-dir install ./cinder
+
+FROM quay.io/fedora/fedora:36 AS release
+RUN dnf install -y libxslt libpq tini && \
+    dnf autoremove -y && dnf clean all
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+ENTRYPOINT ["/tini"]
+RUN useradd --system cinder
+RUN mkdir -p /etc/cinder /var/log/cinder
+COPY --chown=cinder:cinder --from=devel /opt/cinder /opt/cinder
+ENV PATH="/opt/cinder/bin:$PATH"
+USER cinder

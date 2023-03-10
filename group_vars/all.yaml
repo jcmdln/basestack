@@ -1,5 +1,0 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
----
-openstack_container_image: alpine:3.16
-openstack_mirror: https://opendev.org/openstack
-openstack_release: yoga

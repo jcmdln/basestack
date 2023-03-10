@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+{% include "Containerfile.core.j2" %}
+
+FROM base_image AS release
+RUN apk add --no-cache --upgrade postgresql14
+COPY --chmod=640 --chown=postgres:postgres postgresql.conf /etc/postgresql/postgresql.conf
+USER postgres
+CMD ["/usr/bin/postgres", "--config-file=/etc/postgresql/postgresql.conf"]

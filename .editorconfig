@@ -12,15 +12,7 @@ max_line_length = 100
 tab_width = 4
 trim_trailing_whitespace = true
 
-[*.hcl{,.j2}]
-indent_size = 2
-tab_width = 2
-
-[*.json{,c}{,.j2}]
-indent_size = 2
-tab_width = 2
-
-[*.y{,a}ml{,.j2}]
+[*.{json{,c},y{,a}ml}{,.j2}]
 indent_size = 2
 tab_width = 2
 

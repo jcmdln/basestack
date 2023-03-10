@@ -6,33 +6,40 @@
 # Include specific files
 !.ansible-lint
 !.editorconfig
+!.flake8
 !.gitignore
+!.prettierrc.yml
 !.yamllint
 !ansible.cfg
+!galaxy.yml
 !LICENSE.md
+!poetry.lock
+!poetry.toml
+!pyproject.toml
 !README.md
 !requirements.txt
-!requirements.yaml
-!site.yaml
+!requirements.yml
+!site.yml
 !tox.ini
+!Vagrantfile
 
-# Include files from specific dirs
+# Include specific files from specific dirs
 !.github/
 !.github/**/
-!.github/**/*.yaml
+!.github/**/*.yml
 
 !.vscode/
 !.vscode/*.json
 
 !group_vars/
-!group_vars/*.yaml
+!group_vars/*.yml
 
 !inventory/
-!inventory/*.yaml
+!inventory/*.yml
 
-!library/
-!library/*.md
-!library/*.py
+!plugins/
+!plugins/modules/
+!plugins/modules/*.py
 
 !requirements/
 !requirements/*.txt
@@ -41,4 +48,8 @@
 !roles/**/
 !roles/**/*.j2
 !roles/**/*.md
-!roles/**/*.yaml
+!roles/**/*.yml
+!roles/**/library/*.py
+
+!templates/
+!templates/Containerfile.*.j2

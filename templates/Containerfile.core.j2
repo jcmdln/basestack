@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# {{ template_destpath }}
+# {{ ansible_managed }}
+
+FROM {{ capstone_image_registry }}/{{ capstone_image_name }}:{{ capstone_image_version }} AS core
+RUN dnf --repo=fedora,updates -y install tini tzdata && \
+    dnf autoremove -y && \
+    dnf clean all
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+ENV VIRTUALENV_PATH="/opt/capstone"
+RUN python3 -m venv $VIRTUALENV_PATH
+ENV PATH="$VIRTUALENV_PATH/bin:$PATH"
+ENTRYPOINT ["/usr/bin/tini", "--"]
+{{- '\n' -}}

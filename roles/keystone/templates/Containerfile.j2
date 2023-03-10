@@ -1,0 +1,27 @@
+{% include "Containerfile.core.j2" %}
+
+FROM core AS build
+USER root
+RUN dnf --repo=fedora,updates -y install \
+        gcc git hiredis-devel libpq-devel python3-devel python3-wheel
+USER capstone
+RUN pip --disable-pip-version-check --no-cache-dir install \
+        git+{{ capstone_source_mirror }}/keystone@{{ capstone_release_branch | lower }}
+
+FROM core AS keystone
+USER root
+RUN dnf install -y cyrus-sasl hiredis libpq mod_auth_openidc && \
+    dnf autoremove -y && \
+    dnf clean all
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
+RUN mkdir -pv /etc/keystone /var/log/keystone/ && \
+    chown capstone:capstone /var/log/keystone/ && \
+    chmod 0750 /var/log/keystone/
+COPY --chmod=640 --chown=capstone:capstone ./keystone.conf      /etc/keystone/keystone.conf
+COPY --chmod=750 --chown=capstone:capstone ./keystone.sh        /keystone.sh
+COPY --chmod=750 --chown=capstone:capstone ./keystone-fernet.sh /keystone-fernet.sh
+COPY --chmod=750 --chown=capstone:capstone ./keystone-ssh.sh    /keystone-ssh.sh
+COPY --chown=capstone:capstone --from=build $VIRTUALENV_PATH $VIRTUALENV_PATH
+ENV PATH="$VIRTUALENV_PATH/bin:$PATH"
+USER capstone
+CMD ["bash"]
